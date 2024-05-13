@@ -26,9 +26,12 @@ def create_dataset(data, time_step=1):
         y.append(data[i + time_step])
     return np.array(X), np.array(y)
 
-time_step = 1
+time_step = 10
 X_train, y_train = create_dataset(train, time_step)
 X_test, y_test = create_dataset(test, time_step)
+
+print(X_train)
+print(y_train)
 
 # Reshape input để có thể đưa vào LSTM [samples, time steps, features]
 X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], 1)
@@ -38,23 +41,6 @@ X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
 # Chia dữ liệu thành tập huấn luyện và tập kiểm tra
 train_size = int(len(close_prices) * 0.9)
 train, test = close_prices[:train_size], close_prices[train_size:]
-
-# Hàm để tạo dataset
-def create_dataset(data, time_step=1):
-    X, y = [], []
-    for i in range(len(data)-time_step-1):
-        a = data[i:(i+time_step)]
-        X.append(a)
-        y.append(data[i + time_step])
-    return np.array(X), np.array(y)
-
-time_step = 2
-X_train, y_train = create_dataset(train, time_step)
-X_test, y_test = create_dataset(test, time_step)
-
-# Reshape input để có thể đưa vào LSTM [samples, time steps, features]
-X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], 1)
-X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
 
 
 # Xây dựng mô hình LSTM
